@@ -15,9 +15,16 @@ serve((req) => {
             case "/api/prefectures":
                 return createJsonResponse(["北海道", "沖縄"]);
             case "/api/prefectures?p=北海道":
-                return createJsonResponse({disaster:"大雪",mesasureItem:["冬タイヤに替える","ツルハシを用意"]});
+                return createJsonResponse({disaster:"大雪",mesasureTask:["冬タイヤに替える","ツルハシを用意"],
+                mesasureItem:["ツルハシ","水","食料","灯油","使い捨てカイロ","予備電池","懐中電灯","携帯ラジオ"]});
             case "/api/prefectures?p=沖縄県":
-                return createJsonResponse({disaster:"台風",measuresItem:["窓のサッシに新聞紙を詰める","植木鉢を家にしまう"]});
+                return createJsonResponse({disaster:"台風",measuresTask:["窓のサッシに新聞紙を詰める","植木鉢を家にしまう"],
+                mesasureItem:["新聞紙","水","食料","養生テープ","予備電池","懐中電灯","携帯ラジオ"]});
+                
+            case "/api/time":
+                return apiTime(req);
+            case "api/asmd":
+                return apiFourArithmeticOperations(req);
 
         }
     }
