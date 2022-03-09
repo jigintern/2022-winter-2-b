@@ -1,12 +1,14 @@
 <template>
 <div>
-  <h1>都道府県を選択</h1>
-  <select v-model="selectedPrefecture" @change="selectPrefecture(selectedPrefecture)">
-  <option></option>
-  <option v-for="prefecture in prefectures">
-    {{prefecture}}
-  </option>
-  </select>
+  <h1 class="title">都道府県を選択</h1>
+  <div class="select">
+    <select v-model="selectedPrefecture" @change="selectPrefecture(selectedPrefecture)">
+      <option></option>
+      <option v-for="prefecture in prefectures">
+        {{prefecture}}
+      </option>
+    </select>
+  </div>
 </div>
 </template>
 
