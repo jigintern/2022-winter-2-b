@@ -14,6 +14,8 @@ serve((req) => {
         switch (pathname) {
             case "/api/prefectures":
                 return createJsonResponse(["北海道", "沖縄"]);
+            case "/api/prefectures?":
+                return createJsonResponse(["",""])
         }
     }
 
@@ -78,7 +80,8 @@ const parseSearchParams = (url: URL) => {
 // JSON のレスポンスを生成する
 const createJsonResponse = (obj: any) => new Response(JSON.stringify(obj), {
     headers: {
-        "content-type": "application/json; charset=utf-8"
+        "content-type": "application/json; charset=utf-8",
+        "Access-Control-Allow-Origin": "http://localhost:3000"
     }
 });
 
