@@ -15,9 +15,9 @@ serve((req) => {
             case "/api/prefectures":
                 return createJsonResponse(["北海道", "沖縄"]);
             case "/api/prefectures?p=北海道":
-                return createJsonResponse(["大雪"]);
+                return createJsonResponse({disaster:"大雪",mesasureItem:["冬タイヤに替える","ツルハシを用意"]});
             case "/api/prefectures?p=沖縄県":
-                return createJsonResponse(["台風"]);
+                return createJsonResponse({disaster:"台風",measuresItem:["窓のサッシに新聞紙を詰める","植木鉢を家にしまう"]});
 
         }
     }
