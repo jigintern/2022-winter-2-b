@@ -16,10 +16,12 @@ serve((req) => {
                 return createJsonResponse(["北海道", "沖縄"]);
             case "/api/prefectures?p=北海道":
                 return createJsonResponse({disaster:"大雪",mesasureTask:["冬タイヤに替える","ツルハシを用意"],
-                mesasureItem:["ツルハシ","水","食料","灯油","使い捨てカイロ","予備電池","懐中電灯","携帯ラジオ"]});
+                mesasureItem:["ツルハシ","水","食料","灯油","使い捨てカイロ","予備電池","懐中電灯","携帯ラジオ"],
+                mesasureItemLink:{"水":"https://www.amazon.co.jp/s?k=水","使い捨てカイロ":"https://www.amazon.co.jp/s?k=使い捨てカイロ","懐中電灯":"https://www.amazon.co.jp/s?k=懐中電灯"}});
             case "/api/prefectures?p=沖縄県":
                 return createJsonResponse({disaster:"台風",measuresTask:["窓のサッシに新聞紙を詰める","植木鉢を家にしまう"],
-                mesasureItem:["新聞紙","水","食料","養生テープ","予備電池","懐中電灯","携帯ラジオ"]});
+                mesasureItem:["新聞紙","水","食料","養生テープ","予備電池","懐中電灯","携帯ラジオ"],
+                mesasureItemLink:{"水":"https://www.amazon.co.jp/s?k=水","養生テープ":"https://www.amazon.co.jp/s?k=養生テープ","懐中電灯":"https://www.amazon.co.jp/s?k=懐中電灯"}});
                 
             case "/api/time":
                 return apiTime(req);
