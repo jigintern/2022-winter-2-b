@@ -12,12 +12,13 @@ serve((req) => {
     // /api/ で始まる場合、API サーバっぽく処理して返す
     if (pathname.startsWith("/api/")) {
         switch (pathname) {
-            case "/api/time":
-                return apiTime(req);
-            case "/api/asmd": // addition, subtraction, multiplication, division の頭文字
-                return apiFourArithmeticOperations(req);
-            case "/api/reverse":
-                return apiReverse(req);
+            case "/api/prefectures":
+                return createJsonResponse(["北海道", "沖縄"]);
+            case "/api/prefectures?p=北海道":
+                return createJsonResponse(["大雪"]);
+            case "/api/prefectures?p=沖縄県":
+                return createJsonResponse(["台風"]);
+
         }
     }
 
