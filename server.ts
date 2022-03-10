@@ -4,9 +4,9 @@ import { format } from "https://deno.land/std@0.127.0/datetime/mod.ts";
 // import { Push } from "https://github.com/taisukef/webpush";
 import * as postgres from "https://deno.land/x/postgres@v0.14.2/mod.ts";
 
-var el = document.createElement("script");
-el.src = "https://github.com/taisukef/webpush";
-document.body.appendChild(el);
+// var el = document.createElement("script");
+// el.src = "https://github.com/taisukef/webpush";
+// document.body.appendChild(el);
 
 // var typhoonFlag = true;
 // var heavysnowFlag = false;
@@ -16,11 +16,11 @@ document.body.appendChild(el);
 // const month = today.getMonth();
 // var dummymonth = 10;
 
-const pool = new postgres.Pool("postgres://postgres:g@YuSHnBpnZW2EM@db.owqjksavimjrdyrclnld.supabase.co:6543/postgres", 3, true);
-
+const databaseUrl = Deno.env.get("DATABASE_URL")!;
+const pool = new postgres.Pool(databaseUrl, 3, true);
 
 console.log("Listening on http://localhost:8000");
-serve((req) => {
+serve(async (req) => {
     const url = new URL(req.url);
     const pathname = url.pathname;
     const state = url.searchParams.get('p');
@@ -34,24 +34,35 @@ serve((req) => {
             case "/api/prefectures":
 
                 if(state=="北海道") {
-                    const connection = pool.connect();
-                    const result = connection.queryObject`
-                        SELECT * FROM DisasterPrevention
-                    `;
-                    const body = JSON.stringify(result.rows, null, 2);
-                    return new Response(body, {
+                    const connection = await pool.connect();
+                    try {
+                        
+                        const result = await connection.queryObject`
+                        SELECT * FROM disaster_prevention WHERE disaster='大雪' OR disaster='共通'
+                        `;
+                        const body = JSON.stringify(result.rows, null, 2);
+                        return new Response(body, {
                         headers: { "content-type": "application/json" },
                     });
+                    } finally {
+                        connection.release();
+                    }
+                    
                 }
                 else if(state=="沖縄県") {
-                    const connection = pool.connect();
-                    const result = connection.queryObject`
-                        SELECT * FROM todos
-                    `;
-                    const body = JSON.stringify(result.rows, null, 2);
-                    return new Response(body, {
+                    const connection = await pool.connect();
+                    try {
+                        
+                        const result = await connection.queryObject`
+                        SELECT * FROM disaster_prevention WHERE disaster='台風' OR disaster='共通'
+                        `;
+                        const body = JSON.stringify(result.rows, null, 2);
+                        return new Response(body, {
                         headers: { "content-type": "application/json" },
                     });
+                    } finally {
+                        connection.release();
+                    }
                 }
                 else {
                     return createJsonResponse(["北海道", "沖縄"]);
