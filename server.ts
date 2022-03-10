@@ -16,16 +16,18 @@ serve((req) => {
             case "/api/prefectures":
 
                 if(state=="北海道") {
-                    return createJsonResponse({disaster:"大雪",mesasureTask:["冬タイヤに替える","ツルハシを用意"],
-                    mesasureItem:{"ツルハシ":"","水":"https://www.amazon.co.jp/s?k=水","食料":"https://www.amazon.co.jp/s?k=備蓄食料",
-                    "灯油":"","使い捨てカイロ":"https://www.amazon.co.jp/s?k=使い捨てカイロ","予備電池":"https://www.amazon.co.jp/s?k=予備電池",
-                    "懐中電灯":"https://www.amazon.co.jp/s?k=懐中電灯","携帯ラジオ":"https://www.amazon.co.jp/s?k=携帯ラジオ"}});
+                    return createJsonResponse({disaster:"大雪",
+                    mesasureItem:[{name:"ツルハシ",link:""},{name:"冬タイヤに変更",link:""},{name:"水",link:"https://www.amazon.co.jp/s?k=水"},
+                    {name:"食料",link:"https://www.amazon.co.jp/s?k=備蓄食料"},{name:"灯油",link:""},
+                    {name:"使い捨てカイロ",link:"https://www.amazon.co.jp/s?k=使い捨てカイロ"},{name:"予備電池",link:"https://www.amazon.co.jp/s?k=予備電池"},
+                    {name:"懐中電灯",link:"https://www.amazon.co.jp/s?k=懐中電灯"},{name:"携帯ラジオ",link:"https://www.amazon.co.jp/s?k=携帯ラジオ"}]});
                 }
                 else if(state=="沖縄県") {
-                    return createJsonResponse({disaster:"台風",measuresTask:["窓のサッシに新聞紙を詰める","植木鉢を家にしまう"],
-                    mesasureItem:{"新聞紙":"","水":"https://www.amazon.co.jp/s?k=水","食料":"https://www.amazon.co.jp/s?k=備蓄食料",
-                    "養生テープ":"https://www.amazon.co.jp/s?k=養生テープ","予備電池":"https://www.amazon.co.jp/s?k=予備電池",
-                    "懐中電灯":"https://www.amazon.co.jp/s?k=懐中電灯","携帯ラジオ":"https://www.amazon.co.jp/s?k=携帯ラジオ"}});
+                    return createJsonResponse({disaster:"台風",
+                    mesasureItem:[{"新聞紙を窓のサッシに詰める":""},{name:"植木鉢をしまう",link:""},{name:"水",link:"https://www.amazon.co.jp/s?k=水"},
+                    {name:"食料",link:"https://www.amazon.co.jp/s?k=備蓄食料"},{name:"養生テープ",link:"https://www.amazon.co.jp/s?k=養生テープ"},
+                    {name:"予備電池",link:"https://www.amazon.co.jp/s?k=予備電池"},{name:"懐中電灯",link:"https://www.amazon.co.jp/s?k=懐中電灯"},
+                    {name:"携帯ラジオ",link:"https://www.amazon.co.jp/s?k=携帯ラジオ"}]});
                 }
                 else {
                     return createJsonResponse(["北海道", "沖縄"]);
