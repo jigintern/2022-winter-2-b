@@ -14,6 +14,7 @@ serve((req) => {
     if (pathname.startsWith("/api/")) {
         switch (pathname) {
             case "/api/prefectures":
+
                 if(state=="北海道") {
                     return createJsonResponse({disaster:"大雪",mesasureTask:["冬タイヤに替える","ツルハシを用意"],
                     mesasureItem:{"ツルハシ":"","水":"https://www.amazon.co.jp/s?k=水","食料":"https://www.amazon.co.jp/s?k=備蓄食料",
@@ -34,6 +35,9 @@ serve((req) => {
                 return apiTime(req);
             case "api/asmd":
                 return apiFourArithmeticOperations(req);
+
+
+
 
         }
     }
