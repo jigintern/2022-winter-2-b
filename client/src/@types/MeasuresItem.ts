@@ -1,6 +1,7 @@
 type MeasuresItem = {
   disaster: string
-  measuresItem: string[]
+  measuresItems: string[]
+  measuresTasks: string[]
 }
 
 export default MeasuresItem

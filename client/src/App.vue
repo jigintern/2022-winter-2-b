@@ -20,6 +20,8 @@ const selectPrefecture = async (prefecture: string):Promise<void> => {
   <div v-for="measuresItem in measuresItems">
     {{measuresItem}}
   </div>
+
+  <MeasuresItem  />
 </template>
 
 <style>
