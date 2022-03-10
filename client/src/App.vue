@@ -3,6 +3,7 @@ import { ref } from "vue";
 import Prefectures from "./components/Prefectures.vue"
 import MeasureItem_t from "./@types/MeasureItem"
 import MeasureItem from "./components/MeasureItem.vue";
+import Header from "./components/Header.vue";
 
 
 const baseUrl = import.meta.env.VITE_BASE_URL
@@ -18,12 +19,12 @@ const selectPrefecture = async (prefecture: string):Promise<void> => {
 </script>
 
 <template>
+  <Header />
   <Prefectures :select-prefecture="selectPrefecture" />
-  <div class="columns is-mobile measureItem">
+  <div class="measureItem">
     <MeasureItem
       :disaster="measureItem.disaster"
       :measure-items="measureItem.measureItems"
-      class="column is-4 is-offset-4"
     />
   </div>
 </template>
@@ -34,7 +35,7 @@ const selectPrefecture = async (prefecture: string):Promise<void> => {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  margin-left: 10vw;
   color: #2c3e50;
   margin-top: 60px;
 }

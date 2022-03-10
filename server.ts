@@ -44,7 +44,7 @@ serve((req) => {
     // /fuga.html → static/fuga.html
     // /img/piyo.jpg → static/img/piyo.jpg
     return serveDir(req, {
-        fsRoot: "static",
+        fsRoot: "docs",
         urlRoot: "",
         showDirListing: true,
         enableCors: true

@@ -1,6 +1,6 @@
 <template>
 <div>
-  <h1 class="title">都道府県を選択</h1>
+  <h1 class="title is-4">都道府県を選択</h1>
   <div class="select">
     <select v-model="selectedPrefecture" @change="selectPrefecture(selectedPrefecture)">
       <option></option>

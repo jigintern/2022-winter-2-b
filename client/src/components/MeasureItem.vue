@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2 class="title disaster-title">
+    <h2 class="title is-4 disaster-title">
       {{disaster}}
     </h2>
     <div v-for="{name, link} in measureItems" class="columns">
@@ -27,10 +27,3 @@ interface Props {
 
 const {disaster, measureItems} = defineProps<Props>()
 </script>
-
-<style>
-.disaster-title {
-  text-align: center;
-}
-
-</style>
