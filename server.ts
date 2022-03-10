@@ -6,14 +6,39 @@ console.log("Listening on http://localhost:8000");
 serve((req) => {
     const url = new URL(req.url);
     const pathname = url.pathname;
-
+    const state = url.searchParams.get('p');
+    console.log("state:" + state);
     console.log("Request:", req.method, pathname);
 
     // /api/ で始まる場合、API サーバっぽく処理して返す
     if (pathname.startsWith("/api/")) {
         switch (pathname) {
             case "/api/prefectures":
-                return createJsonResponse(["北海道", "沖縄"]);
+
+                if(state=="北海道") {
+                    return createJsonResponse({disaster:"大雪",mesasureTask:["冬タイヤに替える","ツルハシを用意"],
+                    mesasureItem:{"ツルハシ":"","水":"https://www.amazon.co.jp/s?k=水","食料":"https://www.amazon.co.jp/s?k=備蓄食料",
+                    "灯油":"","使い捨てカイロ":"https://www.amazon.co.jp/s?k=使い捨てカイロ","予備電池":"https://www.amazon.co.jp/s?k=予備電池",
+                    "懐中電灯":"https://www.amazon.co.jp/s?k=懐中電灯","携帯ラジオ":"https://www.amazon.co.jp/s?k=携帯ラジオ"}});
+                }
+                else if(state=="沖縄県") {
+                    return createJsonResponse({disaster:"台風",measuresTask:["窓のサッシに新聞紙を詰める","植木鉢を家にしまう"],
+                    mesasureItem:{"新聞紙":"","水":"https://www.amazon.co.jp/s?k=水","食料":"https://www.amazon.co.jp/s?k=備蓄食料",
+                    "養生テープ":"https://www.amazon.co.jp/s?k=養生テープ","予備電池":"https://www.amazon.co.jp/s?k=予備電池",
+                    "懐中電灯":"https://www.amazon.co.jp/s?k=懐中電灯","携帯ラジオ":"https://www.amazon.co.jp/s?k=携帯ラジオ"}});
+                }
+                else {
+                    return createJsonResponse(["北海道", "沖縄"]);
+                }
+            
+            case "/api/time":
+                return apiTime(req);
+            case "api/asmd":
+                return apiFourArithmeticOperations(req);
+
+
+
+
         }
     }
 
