@@ -32,7 +32,6 @@ serve(async (req) => {
     if (pathname.startsWith("/api/")) {
         switch (pathname) {
             case "/api/prefectures":
-
                 if(state=="北海道") {
                     const connection = await pool.connect();
                     try {
@@ -65,9 +64,8 @@ serve(async (req) => {
                     }
                 }
                 else {
-                    return createJsonResponse(["北海道", "沖縄"]);
+                    return createJsonResponse(["北海道", "沖縄県"]);
                 }
-            
             case "/api/time":
                 return apiTime(req);
             case "api/asmd":
@@ -100,7 +98,7 @@ serve(async (req) => {
     // /fuga.html → static/fuga.html
     // /img/piyo.jpg → static/img/piyo.jpg
     return serveDir(req, {
-        fsRoot: "static",
+        fsRoot: "docs",
         urlRoot: "",
         showDirListing: true,
         enableCors: true
@@ -155,7 +153,8 @@ const parseSearchParams = (url: URL) => {
 // JSON のレスポンスを生成する
 const createJsonResponse = (obj: any) => new Response(JSON.stringify(obj), {
     headers: {
-        "content-type": "application/json; charset=utf-8"
+        "content-type": "application/json; charset=utf-8",
+        "Access-Control-Allow-Origin": "http://localhost:3000"
     }
 });
 
