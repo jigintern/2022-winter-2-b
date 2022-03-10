@@ -1,6 +1,23 @@
 import { serve } from "https://deno.land/std@0.127.0/http/server.ts";
 import { serveDir } from "https://deno.land/std@0.127.0/http/file_server.ts";
 import { format } from "https://deno.land/std@0.127.0/datetime/mod.ts";
+// import { Push } from "https://github.com/taisukef/webpush";
+import * as postgres from "https://deno.land/x/postgres@v0.14.2/mod.ts";
+
+var el = document.createElement("script");
+el.src = "https://github.com/taisukef/webpush";
+document.body.appendChild(el);
+
+// var typhoonFlag = true;
+// var heavysnowFlag = false;
+
+// Push.Permission.request();
+// const today = new Date();
+// const month = today.getMonth();
+// var dummymonth = 10;
+
+const pool = new postgres.Pool("postgres://postgres:g@YuSHnBpnZW2EM@db.owqjksavimjrdyrclnld.supabase.co:6543/postgres", 3, true);
+
 
 console.log("Listening on http://localhost:8000");
 serve((req) => {
@@ -9,6 +26,7 @@ serve((req) => {
     const state = url.searchParams.get('p');
     console.log("state:" + state);
     console.log("Request:", req.method, pathname);
+    
 
     // /api/ で始まる場合、API サーバっぽく処理して返す
     if (pathname.startsWith("/api/")) {
@@ -16,18 +34,24 @@ serve((req) => {
             case "/api/prefectures":
 
                 if(state=="北海道") {
-                    return createJsonResponse({disaster:"大雪",
-                    mesasureItem:[{name:"ツルハシ",link:""},{name:"冬タイヤに変更",link:""},{name:"水",link:"https://www.amazon.co.jp/s?k=水"},
-                    {name:"食料",link:"https://www.amazon.co.jp/s?k=備蓄食料"},{name:"灯油",link:""},
-                    {name:"使い捨てカイロ",link:"https://www.amazon.co.jp/s?k=使い捨てカイロ"},{name:"予備電池",link:"https://www.amazon.co.jp/s?k=予備電池"},
-                    {name:"懐中電灯",link:"https://www.amazon.co.jp/s?k=懐中電灯"},{name:"携帯ラジオ",link:"https://www.amazon.co.jp/s?k=携帯ラジオ"}]});
+                    const connection = pool.connect();
+                    const result = connection.queryObject`
+                        SELECT * FROM DisasterPrevention
+                    `;
+                    const body = JSON.stringify(result.rows, null, 2);
+                    return new Response(body, {
+                        headers: { "content-type": "application/json" },
+                    });
                 }
                 else if(state=="沖縄県") {
-                    return createJsonResponse({disaster:"台風",
-                    mesasureItem:[{"新聞紙を窓のサッシに詰める":""},{name:"植木鉢をしまう",link:""},{name:"水",link:"https://www.amazon.co.jp/s?k=水"},
-                    {name:"食料",link:"https://www.amazon.co.jp/s?k=備蓄食料"},{name:"養生テープ",link:"https://www.amazon.co.jp/s?k=養生テープ"},
-                    {name:"予備電池",link:"https://www.amazon.co.jp/s?k=予備電池"},{name:"懐中電灯",link:"https://www.amazon.co.jp/s?k=懐中電灯"},
-                    {name:"携帯ラジオ",link:"https://www.amazon.co.jp/s?k=携帯ラジオ"}]});
+                    const connection = pool.connect();
+                    const result = connection.queryObject`
+                        SELECT * FROM todos
+                    `;
+                    const body = JSON.stringify(result.rows, null, 2);
+                    return new Response(body, {
+                        headers: { "content-type": "application/json" },
+                    });
                 }
                 else {
                     return createJsonResponse(["北海道", "沖縄"]);
@@ -37,12 +61,27 @@ serve((req) => {
                 return apiTime(req);
             case "api/asmd":
                 return apiFourArithmeticOperations(req);
-
-
-
-
         }
     }
+
+    // switch (dummymonth) {
+    //     case 10:
+    //         if(heavysnowFlag==true){
+    //         Push.create('大雪の季節です!',{
+    //             body:'チェックリストを確認しましょう!',
+    //             timeout:8000
+    //         })}
+    //         heavysnowFlag = false;
+    //         typhoonFlag = true;
+    //     case 5:
+    //         if(typhoonFlag==true){
+    //         Push.create('台風の季節です!',{
+    //             body:'チェックリストを確認しましょう!',
+    //             timeout:8000
+    //         })}
+    //         typhoonFlag = false;
+    //         heavysnowFlag = true;
+    // }
 
     // pathname に対応する static フォルダのファイルを返す（いわゆるファイルサーバ機能）
     // / → static/index.html
@@ -122,3 +161,8 @@ const apiReverse = async (req: Request) => {
 type ApiReversePayload = {
     message: string;
 };
+
+const encoder = new TextEncoder();
+
+const mailAdressFile = encoder.encode("data");
+
