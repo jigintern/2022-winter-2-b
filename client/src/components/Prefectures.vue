@@ -28,7 +28,7 @@ onMounted(async () => {
 interface Props {
   selectPrefecture: (p:string) => void
 }
-const props = defineProps<Props>()
+defineProps<Props>()
 
 
 

@@ -9,6 +9,11 @@ h1 span {
   display: inline-block;
 }
 .header {
+  background-color: whitesmoke;
+  padding-top: 4em;
+  padding-left: 10vw;
   margin-bottom: 3em;
+  width:100vw;
+  padding-bottom: 2em;
 }
 </style>

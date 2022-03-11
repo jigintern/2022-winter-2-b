@@ -44,7 +44,7 @@ const selectPrefecture = async (prefecture: string):Promise<void> => {
 
 <template>
   <Header />
-  <Prefectures :select-prefecture="selectPrefecture" />
+  <Prefectures :select-prefecture="selectPrefecture" class="prefectures" />
   <div v-for="(measureItem, disaster) in measureItems" :key="disaster" class="measureItem content">
     <MeasureItem
       :disaster="(disaster as string)"
@@ -56,16 +56,23 @@ const selectPrefecture = async (prefecture: string):Promise<void> => {
 <style>
 @import "bulma/css/bulma.css";
 #app {
+  width:100vw;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  margin-left: 10vw;
+  /* margin-left: 10vw; */
   color: #2c3e50;
-  margin-top: 60px;
 }
- 
+
+.prefectures {
+  padding-left: 10vw;
+}
+
 .measureItem {
+  padding-left:10vw;
   margin-top: 2em;
   text-align: left;
 }
+
+
 </style>
