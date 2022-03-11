@@ -4,7 +4,7 @@
   <div class="select">
     <select v-model="selectedPrefecture" @change="selectPrefecture(selectedPrefecture)">
       <option></option>
-      <option v-for="prefecture in prefectures">
+      <option v-for="prefecture in prefectures" :key="prefecture">
         {{prefecture}}
       </option>
     </select>

@@ -41,7 +41,7 @@ serve(async (req) => {
                         `;
                         const body = JSON.stringify(result.rows, null, 2);
                         return new Response(body, {
-                        headers: { "content-type": "application/json" },
+                        headers: { "content-type": "application/json","Access-Control-Allow-Origin": "http://localhost:3000" },
                     });
                     } finally {
                         connection.release();
@@ -57,7 +57,7 @@ serve(async (req) => {
                         `;
                         const body = JSON.stringify(result.rows, null, 2);
                         return new Response(body, {
-                        headers: { "content-type": "application/json" },
+                        headers: { "content-type": "application/json", "Access-Control-Allow-Origin": "http://localhost:3000" },
                     });
                     } finally {
                         connection.release();
