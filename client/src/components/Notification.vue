@@ -17,7 +17,7 @@
   defineProps<Props>()
 </script>
 
-<style>
+<style scoped>
 .my-notif div {
   position: fixed;
 }
