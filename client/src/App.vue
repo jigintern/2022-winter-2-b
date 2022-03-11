@@ -1,16 +1,28 @@
 <script setup lang="ts">
-import { ref } from "vue"
+import { computed, ref } from "vue"
 import Prefectures from "./components/Prefectures.vue"
 import MeasureItem_t from "./@types/MeasureItem"
 import SelectPrefectureResponse from "./@types/SelectPrefectureResponse"
 import MeasureItem from "./components/MeasureItem.vue"
 import Header from "./components/Header.vue"
+import Notification from "./components/Notification.vue"
 
 const baseUrl = import.meta.env.VITE_BASE_URL
 
 const measureItems = ref<MeasureItem_t>({})
+const selectedPrefecture = ref<string>('')
+const isNotificationActive = ref<boolean>(false)
+
+const notify = () => isNotificationActive.value = true
+const closeNotification = () => isNotificationActive.value = false
+const disasterDummy = computed(() => (selectedPrefecture.value === '北海道' ? "大雪" : selectedPrefecture.value === "沖縄県" ? "台風" : "災害"))
+
+
 
 const selectPrefecture = async (prefecture: string):Promise<void> => {
+  selectedPrefecture.value = prefecture
+  notify()
+
   const res:SelectPrefectureResponse = await (await fetch(`${baseUrl}/api/prefectures?p=${prefecture}`)).json()
   // レスポンスの形からdisasterを取り出しやすいように整形する
   measureItems.value = res.reduce<MeasureItem_t>((p,c) => {
@@ -38,11 +50,17 @@ const selectPrefecture = async (prefecture: string):Promise<void> => {
       ]
     }
   }, {})
-  
+
 }
 </script>
 
 <template>
+  <Notification
+    :prefecture="selectedPrefecture"
+    :disaster="disasterDummy"
+    :close-notification="closeNotification"
+    v-if="isNotificationActive"
+  />
   <Header />
   <Prefectures :select-prefecture="selectPrefecture" class="prefectures" />
   <div v-for="(measureItem, disaster) in measureItems" :key="disaster" class="measureItem content">
