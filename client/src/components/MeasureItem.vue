@@ -8,15 +8,15 @@
         <input type="checkbox" :checked="checked" @change="checkItem(id)">
         <s v-if="checked">{{name}}</s>
         <span v-else>{{name}}</span>
-        <a v-if="link != null" :href="link">   amazonへ</a>
+        <a v-if="link != null" :href="link" target="_blank" rel="noreferrer">  amazonへ</a>
       </label>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import MeasureItem_t from '../@types/MeasureItem';
+import { ref } from 'vue'
+import MeasureItem_t from '../@types/MeasureItem'
 interface Props {
   disaster: string,
   measureItems: MeasureItem_t[string]
@@ -30,7 +30,7 @@ const measureItemCheckbox = ref<MeasureItemCheckbox_t[]>(measureItemCheckboxInit
 const checkItem = (id:number) => {
   const checkboxCopy = [...measureItemCheckbox.value]
   measureItemCheckbox.value = checkboxCopy.map(item => {
-    if(item.id === id){
+    if (item.id === id) {
       return {...item, checked: !item.checked}
     }
     return item

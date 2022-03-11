@@ -62,6 +62,7 @@ const selectPrefecture = async (prefecture: string):Promise<void> => {
   -moz-osx-font-smoothing: grayscale;
   /* margin-left: 10vw; */
   color: #2c3e50;
+  padding-bottom: 10vh;
 }
 
 .prefectures {

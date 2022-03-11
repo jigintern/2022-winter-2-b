@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <h1 class="title is-1"><span>ご当地</span><span>災害ガイド</span></h1>
+    <h1 class="title is-1"><span>ご当地</span><span>防災ガイド</span></h1>
   </div>
 </template>
 
