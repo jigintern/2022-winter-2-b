@@ -1,8 +1,8 @@
 type MeasureItem_t = {
-  disaster: string
-  measureItems: {
-    name: string,
-    link: string
+  [disaster: string]: {
+    id: number
+    name: string
+    link: string | null
   }[]
 }
 
