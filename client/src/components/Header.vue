@@ -4,7 +4,7 @@
   </div>
 </template>
 
-<style>
+<style scoped>
 h1 span {
   display: inline-block;
 }
