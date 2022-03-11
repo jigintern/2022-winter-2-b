@@ -1,7 +1,7 @@
 import { serve } from "https://deno.land/std@0.127.0/http/server.ts";
 import { serveDir } from "https://deno.land/std@0.127.0/http/file_server.ts";
 import { format } from "https://deno.land/std@0.127.0/datetime/mod.ts";
-// import { Push } from "https://github.com/taisukef/webpush";
+// import { Push } from "https://cdnjs.cloudflare.com/ajax/libs/push.js/0.0.11/push.min.js";
 import * as postgres from "https://deno.land/x/postgres@v0.14.2/mod.ts";
 
 // var el = document.createElement("script");
@@ -19,8 +19,10 @@ import * as postgres from "https://deno.land/x/postgres@v0.14.2/mod.ts";
 const databaseUrl = Deno.env.get("DATABASE_URL")!;
 const pool = new postgres.Pool(databaseUrl, 3, true);
 
+
+
 console.log("Listening on http://localhost:8000");
-serve(async (req) => {
+serve(async (req: Request) => {
     const url = new URL(req.url);
     const pathname = url.pathname;
     const state = url.searchParams.get('p');
@@ -35,11 +37,24 @@ serve(async (req) => {
                 if(state=="北海道") {
                     const connection = await pool.connect();
                     try {
-                        
                         const result = await connection.queryObject`
                         SELECT * FROM disaster_prevention WHERE disaster='大雪' OR disaster='共通'
                         `;
-                        const body = JSON.stringify(result.rows, null, 2);
+
+                        var resultArray:any = result.rows;
+                        let i:number = 0;
+                        console.log(resultArray[0]);
+
+                        while(resultArray[i]!=null) {
+                            if(resultArray[i].disaster=="共通"){
+                                resultArray[i].disaster="大雪";
+                            }
+                            i++;
+                        }
+
+                        const body = JSON.stringify(resultArray, null, 2);
+
+
                         return new Response(body, {
                         headers: { "content-type": "application/json" },
                     });
@@ -55,6 +70,18 @@ serve(async (req) => {
                         const result = await connection.queryObject`
                         SELECT * FROM disaster_prevention WHERE disaster='台風' OR disaster='共通'
                         `;
+
+                        var resultArray:any = result.rows;
+                        let i:number = 0;
+                        console.log(resultArray[0]);
+
+                        while(resultArray[i]!=null) {
+                            if(resultArray[i].disaster=="共通"){
+                                resultArray[i].disaster="台風";
+                            }
+                            i++;
+                        }
+
                         const body = JSON.stringify(result.rows, null, 2);
                         return new Response(body, {
                         headers: { "content-type": "application/json" },
@@ -92,6 +119,8 @@ serve(async (req) => {
     //         heavysnowFlag = true;
     // }
 
+    
+
     // pathname に対応する static フォルダのファイルを返す（いわゆるファイルサーバ機能）
     // / → static/index.html
     // /hoge → static/hoge/index.html
@@ -110,6 +139,19 @@ serve(async (req) => {
 function apiTime(req: Request) {
     return new Response(format(new Date(), "yyyy-MM-dd HH:mm:ss"));
 }
+
+// function replaceHokkaido(key: any, value: any){
+//     var s:string = "共通";
+//     console.log("test1");
+//     console.log("key:", key);
+//     console.log("value:",value[0].disaster);
+//     s = value[0].disaster;
+//     if (s == "共通"){
+//         console.log("test2");
+//         return value;
+//     } 
+
+// }
 
 // アロー関数を使った関数宣言
 // クエリパラメータの x と y の四則演算の結果を JSON で返す API
